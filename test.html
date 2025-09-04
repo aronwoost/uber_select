@@ -260,17 +260,18 @@
 </span>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="javascript/string_extensions.js"></script>
-<script src="javascript/search_field.js"></script>
-<script src="javascript/list.js"></script>
-<script src="javascript/output_container.js"></script>
-<script src="javascript/search.js"></script>
-<script src="javascript/pane.js"></script>
 <script src="javascript/uber_search.js"></script>
+<script src="javascript/uber_search/search_field.js"></script>
+<script src="javascript/uber_search/list.js"></script>
+<script src="javascript/uber_search/output_container.js"></script>
+<script src="javascript/uber_search/search_model.js"></script>
+<script src="javascript/uber_search/search.js"></script>
+<script src="javascript/uber_search/pane.js"></script>
 <script src="javascript/jquery.uber-select.js"></script>
 
 <script type="text/javascript">
-$('select').uberSelect({selectCaret: '&#xF078;'})
+jQuery.noConflict()
+jQuery('select').uberSelect({selectCaret: '&#xF078;'})
 </script>
 </body>
 </html>

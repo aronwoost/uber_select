@@ -1,79 +1,5 @@
-function Search(queryInput, resultsContainer, options){
-  var context = this
-  var model = new SearchModel(options.model)
-  var list = new List(options.view)
-  var resultsRendered = false
-
-  // HELPER FUNCTIONS
-
-  this.setData = function(data){
-    model.setData(data)
-  }
-
-  this.renderResults = function(){
-    list.renderResults(model.getResults())
-    $(this).trigger('renderedResults')
-    resultsRendered = true
-  }
-
-  this.getQuery = function(){
-    return model.getQuery()
-  }
-
-  this.getResults = function(){
-    return list.getResults()
-  }
-
-  this.clear = function(){
-    if (!resultsRendered){
-      this.renderResults()
-    }
-
-    if (queryInput.val() === '') {
-      list.unhighlightResults()
-    } else {
-      queryInput.val('').change()
-    }
-  }
-
-  this.highlightResult = function(element, options) {
-    list.unhighlightResults()
-    list.highlightResult(element, options)
-  }
-
-  this.stepHighlight = list.stepHighlight
-  this.setHighlight = list.setHighlight
-
-
-  // BEHAVIOUR
-
-  $(queryInput).on('searchInput', function(){
-    model.setQuery(this.value)
-  })
-
-  // Forward navigating away from queryInput
-  $(queryInput).on('inputDownArrow', function() {
-    $(context).trigger('inputDownArrow')
-  })
-
-  $(model).on('resultsUpdated', function(){
-    context.renderResults()
-  })
-
-  // Forward query change
-  $(model).on('queryChanged', function(){
-    $(context).trigger('queryChanged')
-  })
-
-
-  // INITIALIZATION
-
-  resultsContainer.html(list.view)
-
-
-  // PROTOTYPES
-
-  function SearchModel(options){
+(function($) {
+  UberSearch.SearchModel = function(options){
     var data, results
     var processedQuery = ''
     var context = this
@@ -131,7 +57,7 @@ function Search(queryInput, resultsContainer, options){
     // Provides a regexp for matching the processedDatum from the processedQuery
     // Can be overridden to provide more sophisticated matching behaviour
     this.patternForMatching = function(processedQuery){
-      return new RegExp(processedQuery.escapeForRegExp(), 'i')
+      return new RegExp(escapeForRegExp(processedQuery), 'i')
     }
 
     // Can be overridden to provide more sophisticated matching behaviour
@@ -157,4 +83,11 @@ function Search(queryInput, resultsContainer, options){
     delete this.data // Data isn't an attribute we want to expose
     this.setData(options.data)
   }
-}
+
+  // HELPER FUNCTIONS
+
+  // Escape a string before it is used in a RegExp
+  function escapeForRegExp(string){
+    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+})(jQuery)
