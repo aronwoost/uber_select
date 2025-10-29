@@ -32,12 +32,18 @@
     })
 
     // When a list item is hovered
-    $(view).on('mouseenter focus', '.result:not(.disabled)', function(){
+    $(view).on('mouseenter', '.result:not(.disabled)', function(){
       if ($(this).hasClass('highlighted')) { return }
       unhighlightResults()
-      highlightResult(this, {scroll: false})
+      highlightResult(this, {scroll: false, focus: false})
     })
 
+    // When a list item receives focus from keyboard
+    $(view).on('focus', '.result:not(.disabled)', function(){
+      if ($(this).hasClass('highlighted')) { return }
+      unhighlightResults()
+      highlightResult(this, { scroll: true, focus: false })
+    })
 
     // HELPER FUNCTIONS
 
