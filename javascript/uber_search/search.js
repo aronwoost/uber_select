@@ -57,6 +57,17 @@
       $(context).trigger('inputDownArrow')
     })
 
+    // Handle ENTER key in search input
+    $(queryInput).on('querySubmit', function() {
+      var highlightedResult = list.view.find('.result.highlighted')
+      
+      if (highlightedResult.length) {
+        highlightedResult.click()
+      } else {
+        $(queryInput).trigger('noHighlightSubmit')
+      }
+    })
+
     $(model).on('resultsUpdated', function(){
       context.renderResults()
     })
