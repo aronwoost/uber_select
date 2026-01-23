@@ -59,7 +59,7 @@
 
     // Handle ENTER key in search input
     $(queryInput).on('querySubmit', function() {
-      var highlightedResult = list.view.find('.result.highlighted')
+      var highlightedResult = list.highlightedResult()
       
       if (highlightedResult.length) {
         highlightedResult.click()
