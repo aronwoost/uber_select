@@ -63,8 +63,6 @@
       
       if (highlightedResult.length) {
         highlightedResult.click()
-      } else {
-        $(queryInput).trigger('noHighlightSubmit')
       }
     })
 
