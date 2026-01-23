@@ -45,8 +45,6 @@
 
     input.on('keydown', function(event){
       if (event.which == 13){ // When the enter button is pressed
-        event.preventDefault();
-        event.stopPropagation();
         triggerEvent('querySubmit')
         return false;
       }
